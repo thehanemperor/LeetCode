@@ -1,8 +1,8 @@
-MEDIUM 
-bfs ==> take the last element of the level
-dfs ==> direction - right -> left, if not right, take left node 
+# MEDIUM 
+# bfs ==> take the last element of the level
+# dfs ==> direction - right -> left, if not right, take left node 
 
-Time O(N)  Space O(N)
+# Time O(N)  Space O(N)
 
 class Solution:
     def rightSideView(self, root: TreeNode) -> List[int]:
