@@ -1,4 +1,5 @@
 from heapq import heappush,heappop
+from collections import deque
 # matrix rotate, gravity
 def gravity(matrix):
     
@@ -57,9 +58,120 @@ def deleteMinimumPeak(nums):
         
     print(result)
 
-    
-   
+def restoreOrder(matrix):
+    indegree = {}
+    graph = {}
+    for after,b4 in matrix:
+        indegree[after] = indegree.get(after,0)+1
+        indegree[b4] = indegree.get(b4,0)+1
+        if b4 not in graph:
 
+            graph[b4]=[after]
+        else:
+            graph[b4].append(after)
+
+        if after not in graph:
+            graph[after] = [b4]
+        else:
+            graph[after].append(b4)
+    
+    queue = deque([])
+    visited = set([])
+    result = []
+    for k,v in indegree.items():
+        if v == 1:
+            node = k
+            visited.add(k)
+            break
+
+    def dfs(curr):
+        
+        visited.add(curr)
+        result.append(curr)
+        for nei in graph[curr]:
+            if nei not in visited:
+                visited.add(nei)
+                dfs(nei)
+
+    dfs(node)    
+    #print('in',indegree,"graph",graph)
+    
+    print(result)
+
+def textEditor(operations):
+    def undo(lastOP,lastString,result):
+        if not lastOp:
+            return result
+        op = lastOp.pop()
+        part = lastString.pop()
+        length = len(result)
+        if op == "INSERT":
+            result = result[:length-len(part)]
+        elif op == "PASTE":
+            result = result[:length-len(part)]
+        elif op == "DELETE":
+            result += part
+        
+        return result
+
+    result = ""
+    lastCopied = ""
+    lastPasted = ""
+    lastDelete = ""
+    lastInsert = ""
+    lastOp = []
+    lastString = []
+
+    for op in operations:
+        curr = op.split(" ")
+        if curr[0] == "INSERT" and len(curr)==2:
+            
+            lastInsert = curr[1]
+            result += lastInsert
+            lastOp.append(curr[0])
+            lastString.append(lastInsert)
+        elif curr[0] == "DELETE":
+            if not result:
+                continue
+            lastDelete = result[-1]
+            result = result[:-1]
+            lastOp.append(curr[0])
+            lastString.append(lastDelete)
+        elif curr[0] =="UNDO":
+            result = undo(lastOp,lastString,result)
+        elif curr[0] == "COPY":
+            lastCopied = result[int(curr[1]):]
+        elif curr[0] == "PASTE":
+            if lastCopied:
+                lastPasted = lastCopied
+                result += lastPasted
+                lastOp.append(curr[0])
+                lastString.append(lastPasted)
+
+    print(result)
+
+
+def coolFeature(a,b,query):
+    def sum2(a,b,x):
+        result = 0
+        check = {}
+        for i in a:
+            check[x-i] = check.get(x-i,0)+1
+        for i in b:
+            if i in check:
+                result += check[i]
+        print('2sum',a,b,x,'result',result)
+        return result
+
+    result = []
+    for q in query:
+        if len(q) == 3 and q[0] == 0:
+            b[q[0]] = q[2]
+        elif len(q) == 2 and q[0] == 1:
+            result.append(sum2(a,b,q[1]))
+    
+    print('coolfeature',result)
+    return result
 
 
 
@@ -68,7 +180,9 @@ def deleteMinimumPeak(nums):
 if __name__ == "__main__":
     a= "...##.....*#."
     b = "...####......"
+    
     # print(len(a),len(b))
+    
     graMatrix = []
     graMatrix.append([x for x in a])
     graMatrix.append([x for x in b])
@@ -79,5 +193,17 @@ if __name__ == "__main__":
 
     miniPeak = [2,7,8,5,1,6,3,9,4]
     miniPeak = [3,5,4,9,1]
-    
-    deleteMinimumPeak(miniPeak)
+    topoPair = [[1,2],[4,2],[1,5],[3,5]]
+    topoPair = [[2,1],[2,3],[3,4]]
+    operations = ["INSERT Code","INSERT Signal","DELETE","UNDO"]
+    operations = ["INSERT Da","COPY 0","UNDO","PASTE","PASTE","COPY 2","PASTE","PASTE","DELETE","INSERT aaam"]
+    operations = ["INSERT a","DELETE","COPY 0","UNDO","PASTE","UNDO","INSERT b","COPY 0","PASTE","COPY 2","PASTE","UNDO",
+                    "DELETE","UNDO"]
+    coola=[1,2,2]
+    coolb=[2,3]
+    coolq=[[1,4],[0,0,3],[1,5]]
+    coolFeature(coola,coolb,coolq)
+    #textEditor(operations)
+    #restoreOrder(topoPair)
+
+    #deleteMinimumPeak(miniPeak)
