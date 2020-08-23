@@ -432,6 +432,6 @@ if __name__ == "__main__":
     #sortChess(chess,chessQuery)
     binaryOps = ["L","L","L","C1","L","C0","C0","C0"]
     #booleanDeque(2,binaryOps)
-    print(list(filter(lambda x: x!=".",[1,".",2,3,0,0,0,5])))
+    
     #pairSum2(pairPower)
     #deleteMinimumPeak(miniPeak)
