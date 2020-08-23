@@ -336,6 +336,53 @@ def countSplitArray(array):
     print(count)
 #def sawTooth(array):
 
+def sortChess(numbers,queries):
+    #black x%2==0 and y%2==0 or (x%2 == 1 and y%2 == 1)
+    for query in queries:
+        x,y,length = query
+        
+        blackOrder = []
+        whiteOrder = []
+        black = []
+        white = []
+        for i in range(length):
+            for j in range(length):
+                if ((x+i) %2 == 0 and (y+j)%2==0) or ((x+i)%2 == 1 and (y+j)%2 == 1):
+                    blackOrder.append((x+i,y+j))
+                    black.append(numbers[x+i][y+j])
+                else:
+                    whiteOrder.append((x+i,y+j))
+                    white.append(numbers[x+i][y+j])
+        black.sort()
+        white.sort()
+        for i,v in enumerate(blackOrder):
+            
+            numbers[v[0]][v[1]]= black[i]
+        
+        for i,v in enumerate(whiteOrder):
+            numbers[v[0]][v[1]] = white[i]
+
+
+    for num in numbers:
+        print(num)
+    
+
+def booleanDeque(n,op):
+    arr = ["0"]*n 
+    heap = [i for i in range(n)]
+    for o in op:
+        if o == "L":
+            if heap:
+                index = heappop(heap)
+                arr[index] = "1"
+        else:
+            index = int(o[1])
+            if arr[index] != "0":
+                arr[index] = "0"
+                heappush(heap,index)
+
+    print("".join(arr))
+
 
     
 
@@ -379,6 +426,12 @@ if __name__ == "__main__":
     mallM = random.randint(5,10)
     #gotoMall(mallN,mallM,random.randint(0,mallM-1),random.randint(0,mallN-1),random.randint(0,mallM-1),random.randint(0,mallN-1))
     split3Array = [1,1,1]
-    countSplitArray(split3Array)
+    #countSplitArray(split3Array)
+    chess = [[5,4],[1,3],[2,3]]
+    chessQuery = [[0,0,2],[1,0,2],[0,0,2]]
+    #sortChess(chess,chessQuery)
+    binaryOps = ["L","L","L","C1","L","C0","C0","C0"]
+    #booleanDeque(2,binaryOps)
+    print(list(filter(lambda x: x!=".",[1,".",2,3,0,0,0,5])))
     #pairSum2(pairPower)
     #deleteMinimumPeak(miniPeak)
