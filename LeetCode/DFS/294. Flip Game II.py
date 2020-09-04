@@ -1,3 +1,9 @@
+# MEDIUM
+# recursion 
+
+# recursive rule: 
+#     s[i-1] == s[i] == "+" and flipped s[i-1:i+1] + rest of string are not flippable
+
 class Solution:
    
     def canWin(self, s: str) -> bool:
