@@ -1,5 +1,5 @@
 class Solution:
-    def sumNumbers(self, root: TreeNode) -> int:
+    def sumNumbers(self, root ):
         self.result = 0
         self.preOrder(root,0)
         return self.result
